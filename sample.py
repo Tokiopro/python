@@ -8,6 +8,9 @@ list = l[-1]
 print(l[2:5])
 # 省略できる [:2]0から2番目まで、[2:]2番目から最後まで
 print(l[:2])
+print(l[2:])
+print(l[::2])
+print(l[::-1])
 # [::2]ふたつ飛ばしで取得、[::-1]後ろから取得
 
 # リストの操作
@@ -291,3 +294,304 @@ x = 1+1+1+1+1+1+1+1\
 #またパレンティスの丸括弧でも改行できる
 y = (1+1+1+1+1+1+1+1
     +1+1+1+1+1+1+1)
+
+#if文
+x = 10
+if x < 0:
+    print('negative')#pythonはインデントで次の行に行く（スペースは4つが好ましい）
+elif x == 0:
+    print('zero')
+else:
+    print('positive')
+
+a = 5
+b = 10
+if a > 0:
+    print('a is positive')
+    if b > 0:#pythonはインデントを綺麗に合わせないとエラーが起きてしまう。
+        print('b is positive')
+
+#比較演算子と論理演算子
+a == b
+a != b
+a < b
+a <= b
+a >= b
+
+# aもbも真であれば真
+if a > 0:
+    if b > 0:
+        print('a and b are positive')
+        
+#andを使って行数を減らす↓
+        
+if a > 0 and b > 0:
+    print('a and b are positive')
+    
+    
+#aまたはbが真であれば真
+if a > 0 or b > 0:
+    print('a or b is positive')
+
+#inとnotの使い所
+y = [1, 2, 3]
+x = 1
+
+if x in y:
+    print('in')
+
+if 100 not in y:
+    print('not in')
+
+a = 1
+b = 2
+
+if not a == b:
+    print('not equal')
+
+if a < b:
+    print('not equal')
+    
+#notはいつ使うのか？
+
+is_ok = True
+# ==や!= などの等号を使う必要がない。
+if not is_ok:
+    print('hello')
+    
+#値が入っていない判定をするテクニック
+is_ok = 0#False
+is_ok = 1#True
+#値が入っていればtrue
+#空のリストはFalseになる。
+# False, 0, 0.0, [], {}, (), set()
+if is_ok:
+    print('ok!')
+else:
+    print('No!')
+    
+#Noneを判定する場合
+#pythonはnullをNoneという。
+is_empty = None
+#print(help (is_empty))
+
+#is_empty is None=これはNoneですか？という時に使う（＝＝はおすすめされていない)
+if is_empty is not None:#Noneではない
+    print('Not None!!!')
+    
+print(1 == True)
+print(1 is True)#Falseになる.オブジェクトが一緒でなければならない。
+
+#基本的にNoneかどうか判定するときにisを使う。
+
+#while文とcontinue文とbreak文
+
+count = 0
+# while count < 5:
+#     print(count)
+#     count += 1#これがないと無限ループになってしまう
+# #0 1 2 3 4
+
+# while True:
+#     if count >= 5:
+#         break
+
+#     if count == 2:
+#         count +=1
+#         continue#0 1 3 4 2のときはスキップする。
+    
+#     print(count)
+#     count += 1
+    
+#while else文
+
+while count < 5:
+    if count == 1:
+        break#完全にループから抜けるのでdoneは表示されない　0だけ
+    print(count)
+    count += 1
+else:
+    print('done')
+
+#input関数
+
+# while True:
+#     word = input('Enter:')#コンソール上で入力を求める。
+#     if word == 'ok':#okじゃなければループ
+#         break
+#     print('next')
+    
+#integerにしたい場合
+# while True:
+#     word = input('Enter:')
+#     num = int(word)#integer型に変換
+#     if num == 100:
+#         break
+#     print('next')
+    
+#for文とbreak文とcontinue文
+some_list = [1, 2, 3, 4, 5]
+
+i = 0
+while i < len(some_list):#iがsme_listの要素数より少ない時
+    print(some_list[i])
+    i += 1
+    
+#forループはin演算子をつかってiterator(反復処理をするもの)をinで入れて行って全部回せる。
+for i in some_list:#1, 2, 3, 4, 5
+    print(i)
+    
+for s in 'abcde':
+    print(s)#a b c d e
+    
+for word in ['My', 'name', 'is', 'Mike']:
+    if word == 'name':
+        continue
+    print(word)
+    
+#for else文
+for fruit in ['apple', 'banana', 'orange']:
+    if fruit == 'banana':
+        print('stop eating')
+        break#elseも実行されない。
+    print(fruit)
+else:
+    print('I ate all')
+    
+#range関数
+num_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+for i  in num_list:
+    print(i)
+
+#いちいちリストを作るのは面倒臭い
+#range関数で0から9まで作ってくれるrange(10)
+
+for i in range(2, 10, 3):#2~9で3個飛ばし 2, 5, 8
+    print(i)
+
+for _ in range(10):#iを使う必要がない場合（＿）を使う・
+    print('hello')
+
+#enumerate関数
+#forで回すときにインデックスを表示する場合は？
+i = 0
+for fruit in ['apple', 'banana', 'orange']:
+    print(i,fruit)
+    i += 1#これでもできる
+    
+for i, fruit in enumerate(['apple', 'banana', 'orange']):#enumerateがイテレーターをそれぞれに入れてくれる。
+    print(i,fruit)
+    
+#zip関数
+days = ['Mon', 'Tue', 'Wed']
+fruits = ['apple', 'banana', 'orange']
+drinks = ['coffee', 'tea', 'beer']
+
+for i in range(len(days)):
+    print(days[i], fruit[i], drinks[i])
+    
+#もっと簡単に書くことができる。zip関数
+#indexを指定する必要がなくなる
+for day, fruit, drink in zip(days, fruits, drinks):
+    print(day, fruit, drink)
+    
+#辞書をfor文で処理をする
+d = {'x': 100, 'y': 200}
+print(d.items())#dict_items([('x', 100), ('y', 200)])リストの中にキーとバリューのtupleがある
+#tupleのアンパッキングを利用して、キーとバリューをk, vに入れている。よく使われるメソッド
+for k, v in d.items():
+    print(k, ':', v)#x : 100 y : 200
+
+#関数定義
+def say_something():
+    print('hi')
+    
+print(say_something)#pythonは順次処理なので、関数を呼び出す前に関数が定義されている必要がある。
+type(say_something)#<function say_something at 0x1055391f0>　functionという型
+f = say_something
+f()
+
+#関数の返り値、戻り値
+def said_something():
+    s = 'hi'
+    return s#returnで返す。
+    
+result = said_something()#resultにhiが入ってくる。
+print(result)
+
+def what_is_this(color):
+    if color == 'red':
+        return 'tomato'
+    elif color == 'green':
+        return 'green pepper'
+    else:
+        return "I don't know"
+    
+result = what_is_this('red')
+print(result)
+
+#関数は何度も同じコードを呼び出すものにする。
+#ifを何度も呼び出したい時。
+
+num: int = 10#型を一応宣言できる。
+#今の所このような書き方はされていないが、一応できる。
+
+def add_num(a: int,b: int) -> int:
+    return a + b
+
+r = add_num(10, 20)
+print(r)#30
+#文字列を入れた場合は？
+
+r = add_num('a', 'b')
+print(r)#ab
+#関数が実行されてしまう。pythonは型を宣言して、間違った型が入ってきてもエラーでは返してくれない
+
+#位置引数とキーワード引数とデフォルト引数
+# def menu(entree, drink, dessert):
+#     print(entree)
+#     print(drink)
+#     print(dessert)
+    
+# menu('beef', 'beer', 'ice')#順番通りに出力される。
+#わかりやすく書くには？
+#キーワード引数を使う。
+
+# def menu(entree, drink, dessert):
+#     print('entree = ', entree)
+#     print('drink = ',drink)
+#     print('entree = ', dessert)
+    
+# menu(entree='beef', dessert='ice', drink='beer')
+#entree =  beef
+#drink =  beer
+#entree =  ice
+#menu(dessert='ice', 'beef', drink='beer')←この場合だと動かない
+#位置引数とキーワード引数が衝突し、pythonが判断できない
+#drinkにbeerがキーワード引数で入れられているが、位置引数的にはbeefだから。
+
+#デフォルト引数
+def menu(entree='beef', drink='wine', dessert='ice'):
+    print('entree = ', entree)
+    print('drink = ',drink)
+    print('entree = ', dessert)
+    
+menu(entree='chicken', drink='beer')#上書きされる。desertはiceのまま
+# entree =  chicken
+# drink =  beer
+# entree =  ice
+
+#デフォルト引数で気をつけること
+def test_func(x, l=[]):
+    l.append(x)
+    return l
+
+r = test_func(100)
+print(r)
+
+#注意点
+#もう一度実行するとどうなる？
+r = test_func(100)
+print(r)#[100, 100]となる。
+
+#リストはデフォルト引数で与えるべきではない、バグにつながる。
