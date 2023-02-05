@@ -593,5 +593,91 @@ print(r)
 #もう一度実行するとどうなる？
 r = test_func(100)
 print(r)#[100, 100]となる。
+#リストのアドレスを参照して試合。一回目に呼び出された時のl.append(x)
 
 #リストはデフォルト引数で与えるべきではない、バグにつながる。
+
+#空のリストをデフォルト値と定義したい場合、
+#pythonでどう記述する？
+
+def test_func2(x, l=None):
+    if l is None:#Noneの時にからのリストを返す。
+        l =[]
+    l.append(x)
+    return l
+
+r = test_func2(100)
+r = test_func2(100)
+print(r)#[100]
+
+#位置引数のタプル化
+
+#引数が多数あるときに*argsとすることで引数をまとめて受け取れる。
+def say_something(*args):
+    print(args)#('Hi!', 'Mike', 'Nance')
+    
+say_something('Hi!', 'Mike', 'Nancy')
+
+def say_something(word, *args):
+    print('word = ', word)
+    for arg in args:
+        print(arg)
+        
+say_something('Hi!', 'Mike', 'Nancy')
+# word =  Hi!
+# Mike
+# Nance
+t = ('mike', 'Nancy')
+say_something('Hi!', *t)
+#自分でタプルを作って、展開する記法
+#タプルをアンパッキングして、*argsでまたタプル化して入れて展開。
+#あまり使われない。
+
+#キーワード引数に辞書化
+
+#**kwargs=keyword argumentsの略称
+#辞書型で受け取る。(辞書化する)
+def menu(**kwargs):
+    for k, v in kwargs.items():#keyとvalueを扱える。
+        print(k, v)
+        
+#dict(辞書型)を定義
+d = {
+    'entree': 'beef',
+    'drink': 'ice coffee',
+    'dessert': 'ice',
+}
+menu(**d)#アスタリスクをつけることで、辞書が展開されて渡される。
+#アスタリスクをつけない場合はエラーTypeError: menu() takes 0 positional arguments but 1 was given
+
+#**はアプリケーション開発でよく見られる
+
+#位置引数とタプル化と辞書化はまとめてできる。
+
+def menu(food, *args, **kwargs):#def menu(food, **kwargs, *args):と順序を入れ替えるとエラーになる。
+    print(food)
+    print(args)
+    print(kwargs)
+    
+menu('banana', 'apple', 'orange', entree='beef', drink='coffee')
+
+# banana food
+# ('apple', 'orange') *args
+# {'entree': 'beef', 'drink': 'coffee'} **kwargs
+
+#Docstring
+
+#print(function, __doc__)#docstringをprintで見ることができる。
+
+#関数内関数
+#定義する場合＝その関数の中だけで使う関数(インナー関数)
+
+def outer(a, b):
+    def plus(c, d):#この関数(outer)の中だけで使う関数(plus)
+        return c + d
+    
+    r1 = plus(a, b)
+    r2 = plus(b, a)
+    print(r1 + r2)
+    
+outer(1, 2)#6
