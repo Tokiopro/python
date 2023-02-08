@@ -681,3 +681,93 @@ def outer(a, b):
     print(r1 + r2)
     
 outer(1, 2)#6
+
+#クロージャーについて
+
+def outer(a, b):
+    def inner():
+        return a + b
+    
+    return inner#関数オブジェクトを返している。
+
+f = outer(1, 2)#この時点でouter関数の引数a, bに1, 2が入るが、
+#returnでinner関数が返り値となっている。今fにはinner関数が入っている状態。
+r = f()#ここでinner関数を実行している。
+print(r)#3
+
+#どんな時に使うのか？
+#例えば1 + 2を今実行したくない,他の処理を実行してから、最終的に実行したい時に使われる。
+#用途によって使い分ける
+def circle_area_func(pi):
+    def circle_area(radius):
+        return pi * radius * radius
+
+    return circle_area
+
+cal1 = circle_area_func(3.14)#先にpiを決めてしまって、circle_areaオブジェクトを返す。
+cal2 = circle_area_func(3.141592)
+
+print(cal1(10))#314.0 radiusに10を入れている。
+print(cal2(10))#314.1592
+
+#デコレーターについて。
+#関数を実行する前後に何か処理を行いたい、機能を追加したいという時に使う。
+#デコレータを使うことによって、既存の関数の中身を直接変更することなく、
+#それらに機能を追加したり変更したりすることが出来るようになります。
+
+
+def print_info(func):
+    def wrapper(*args, **kwargs):
+        print('start')
+        result = func(*args, **kwargs)#ここで何か処理をしたい。
+        print('end')
+        return result
+    return wrapper
+
+
+# def add_num(a, b):
+#     return a + b
+
+# #↓このコードはわかりづらい。デコレーターであるということを開発者、読む人が理解していなければならない
+# f = print_info(add_num)#wrapper関数が返ってくる。
+# r = f(10, 20)#wrapper関数の*argsに10,20がタプル化されて入る。
+# print(r)#30
+
+#デコレーターを使った場合
+
+@print_info#デコレーター add_numが引数としてこの関数に入っている。
+def add_num(a, b):
+    return a + b
+
+r = add_num(10, 20)#いきなりインナー関数(wrapper)を呼び出している。
+print(r)
+
+def print_more(func):
+    def wrapper(*args, **kwargs):
+        print('start')
+        result = func(*args, **kwargs)#ここで何か処理をしたい。
+        print('end')
+        return result
+    return wrapper
+
+#二つの関数にデコレーターを行いたい場合は、上に連ねる。
+#ただし、上から順次処理されていくので、順番は大事。
+@print_more
+@print_info
+def add_num(a, b):
+    return a + b
+r = add_num(10, 20)#いきなりインナー関数(wrapper)を呼び出している。
+print(r)
+
+#ラムダ
+l = ['Mon', 'tue', 'Wed', 'Thu', 'fri', 'sat', 'Sun']
+
+def change_words(words, func):
+    for word in words:
+        print(func(word))#sample_funcがプリントされる
+        
+def sample_func(word):
+    return word.capitalize()#一番始めの文字を大文字にするメソッド
+
+change_words(l, sample_func)
+
