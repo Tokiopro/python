@@ -766,8 +766,72 @@ def change_words(words, func):
     for word in words:
         print(func(word))#sample_funcがプリントされる
         
-def sample_func(word):
-    return word.capitalize()#一番始めの文字を大文字にするメソッド
+# def sample_func(word):
+#     return word.capitalize()#一番始めの文字を大文字にするメソッド
+#ラムダで一行で描くことができる。
+#wordが引数、コロンの後をreturnを書かずに✖️。
+sample_func = lambda word: word.capitalize()
+# change_words(l, sample_func) 
+#これでもOK
+# change_words(l, lambda word: word.capitalize())
+change_words(l, lambda word: word.lower())
 
-change_words(l, sample_func)
+#ラムダの特徴
+#一行になっただけでは？
+#lowerメソッドも使いたい。
+# defを使って定義しないのでコード量を減らすことができる。
+
+#ジェネレーター
+l = ['Good morning', 'Good afternoon', 'Good night']
+
+for i in l:
+    print(i)
+    
+#yieldは算出する?という意味
+#yieldは、関数を一時的に実行停止させることが出来る機能を持つ文です。
+#その時点での戻り値を返し、そしてまた再開させることができます
+
+# def greeting():
+#     yield 'Good morning'#forループで一気に処理するわけではなく、一度この用度を保持する。
+#     for i in range(1000000):
+#         print(i)
+#     yield 'Good afternoon'
+#     for i in range(100000):#一回呼び出して、重たい処理を実行。小分けにする。
+#         print(i)
+#     yield 'Good night'
+    
+# g = greeting()
+
+# print(next(g))#Good morning　一度抜けて次の文を実行する
+# print('aaa')
+# print(next(g))# Good afternoon
+# print('bbb')
+# print(next(g))# Good night、もう一度実行するとストップイテレーションという例外エラーが発生する。
+
+def counter(num=10):
+    for _ in range(num):
+        yield 'run'
+
+#リスト内包表記
+
+t = (1, 2, 3, 4, 5)
+t2 = (5, 6, 7, 8, 9, 10)
+r = []
+for i in t:
+    if i % 2 == 0:
+        r.append(i)
+    
+print(r)
+#リスト内包表記は一行で書ける。
+# あまりメモリを使わないアペンドする処理が書いてないので、速い。
+r = [i for i in t if i % 2 ==0]
+print(r)
+
+r = [i * j for i in t for j in t2]
+print(r)
+#[5, 6, 7, 8, 9, 10, 10, 12, 14, 16, 18, 20, 15, 18, 21, 24, 27, 30, 20, 24, 28, 32, 36, 40, 25, 30, 35, 40, 45, 50]
+
+
+
+
 
