@@ -830,8 +830,97 @@ print(r)
 r = [i * j for i in t for j in t2]
 print(r)
 #[5, 6, 7, 8, 9, 10, 10, 12, 14, 16, 18, 20, 15, 18, 21, 24, 27, 30, 20, 24, 28, 32, 36, 40, 25, 30, 35, 40, 45, 50]
+#リスト内包表記は複雑だと可読性が落ちるので、避けるべき。
 
+#辞書包括表記
 
+w = ['mon', 'tue', 'wed']
+f = ['coffee', 'milk', 'water']
+#zip関数で　mon coffeeというように、同じインデックス同士で繋げる。
 
+d = {}
+for x, y in zip(w, f):
+    d[x] = y
+    
+print(d)
 
+#包括表記
+d = {x: y for x, y in zip(w, f)}# keyとvalueで表現できる。
+print(d)
+print(zip(x, y))
 
+#集合内包表記
+
+s = set()
+for i in range(10):
+    if i % 2 == 0:
+        s.add(i)
+        
+print(s)
+s = {i for i in range(10) if i % 2 == 0}
+print(s)
+
+#ジェネレーター内包表記
+def g():
+    for i in range(10):
+        yield i
+
+g = g()
+
+g = (i for i in range(10))#タプル型になるのでは？と思われがちだが、ジェネレーター型になっている。
+print(type(g))#<generator object <genexpr> at 0x103140f90>
+print(g)
+
+for x in g:
+    print(x)
+    
+#名前空間とスコープ
+
+animal = 'cat'
+
+def f():
+    #print(animal)この箇所はエラーになる。
+    #関数内からグローバルのanimal(cat)を変更したい場合は？
+    # global animal
+    animal = 'dog'
+    # print('local', animal)
+    # local dog
+    # global: dog
+    print('local', locals())#これでもいける。関数の中だけdogになる。
+    # local {'animal': 'dog'}
+    # global: cat
+    
+
+f()
+print('global:', animal)
+# print('global:', globals())
+# print(__name__)
+
+#例外処理
+l = [1, 2, 3]
+i = 5
+
+try:
+    l[i]
+except IndexError as ex:
+    print("Don't worry: {}".format(ex))#list index out of range
+except Exception as ex:
+    print('other: {}'.format(ex))#Exceptionは最上位の例外処理（一番抽象度が高い）
+
+print("last")
+
+#エラーがない場合のtry-else文というものもある。
+#独自例外の作成
+class UppercaseError(Exception):
+    pass
+
+def check():
+    words = ['APPLE', 'orange', 'banana']
+    for word in words:
+        if word.isupper():
+            raise UppercaseError(word)#自分でエラーを作れる。
+
+try:
+    check()
+except UppercaseError as exc:
+    print('This is my fault. Go next')
