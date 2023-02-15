@@ -89,3 +89,62 @@ ranking = {
 #ランキングのgetをkeyにする。getした値＝100
 # 値が高い順にしたいので、reverse=Trueを使う。s
 print(sorted(ranking, key=ranking.get, reverse=True))
+
+#標準ライブラリ
+#よく使われるライブラリコンテナデータ型
+
+s = 'sjbfvjknjkfsbvlsigrhbi'
+
+d = {}
+for c in s:
+    if c not in d:#キーがあるか確認
+        d[c] = 0#なければ入れる
+    d[c] += 1
+print(d)
+
+d = {}
+for c in s:
+    d.setdefault(c, 0)#(cがなければ0を入れるというメソッド)
+    d[c] += 1
+print(d)
+
+from collections import defaultdict
+
+d = defaultdict(int)
+
+for c in s:
+    d[c] += 1
+print(d)
+
+print(d['f'])
+
+#サードパーティーのライブラリ
+#setupでまとめたライブラリをpypyリポジトリに上げることができる。
+#環境設定
+# pip install termcolor
+from termcolor import colored
+
+print('test')
+print(colored('test', 'green'))
+
+import collections#カンマ区切りはあまり推奨されていない。
+import os
+import sys
+#サードパーティーのパッケージは改行すると良い
+import termcolor
+#自分で作ったパッケージも改行すると良い
+import lesson_package
+#ローカルのファイル
+import sample
+print(collections.__file__)
+print(termcolor.__file__)
+print(lesson_package.__file__)
+print(sample.__file__)
+
+print(sys.path)
+#ローカルのパッケージが優先される。
+#標準パッケージやサイドパーティーをローカルに作るとそれが読み込まれる。
+#sys.pathが書いていないところにパッケージを置いても読み込まれない。
+
+#__name__,__main__
+print(__name__)
