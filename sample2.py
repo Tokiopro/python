@@ -148,3 +148,11 @@ print(sys.path)
 
 #__name__,__main__
 print(__name__)
+#生で書くとローカルでインポートした時に実行されてしまう。
+#lesson_package.talk.animal.sing()
+#安全な書き方
+def main():
+    lesson_package.talk.animal.sing()
+#この書き方はよく見る。
+if __name__ == '__main__':
+    main()
