@@ -107,13 +107,16 @@ class Word(object):
     
     def __init__(self, text):
         self.text = text
-        
+    
+    #一番よく使われる特殊メソッド
     def __str__(self):
         return 'word'
     
+    #テキストの長さを返す
     def __len__(self):
         return len(self.text)
-    
+    #Word.text + word.text2と本来ならしなければいけない
+    # クラスを足し合わせるだけでよい
     def __add__(self, word):
         return self.text.lower() + word.text.lower()
     
